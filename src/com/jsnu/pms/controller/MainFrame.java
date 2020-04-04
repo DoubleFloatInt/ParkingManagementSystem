@@ -1,6 +1,7 @@
 package com.jsnu.pms.controller;
 
 import com.jsnu.pms.service.ICarService;
+import com.jsnu.pms.service.impl.CarServiceImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,13 +33,13 @@ public class MainFrame extends JFrame implements MouseListener {
         this.setTitle("停车场管理系统");
         this.setSize(500, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.setLayout(null);
 
         // 创建按钮
         this.parkCarBtn = new JButton();
         this.parkCarBtn.setText("停车");
         this.parkCarBtn.setBounds(100, 100, 300, 100);
-        this.parkCarBtn.addMouseListener(this);
 
         this.pickCarBtn = new JButton();
         this.pickCarBtn.setText("取车");
@@ -89,32 +90,32 @@ public class MainFrame extends JFrame implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if ((e.getSource()) == (this.parkCarBtn)) {
-            ICarService carService = null;
-//            if (carService.getCarportNum() == 0) {
-            if (true) {
-                System.out.println("无空位");
-                JDialog a = new JDialog();
-                a.setTitle("Demo");
-                a.setSize(500, 600);
-                a.setLocation(200, 400);
-                a.setLayout(null);
-                a.setVisible(true);
+            ICarService carService = new CarServiceImpl();
+            if (carService.getEmptyCarport() == 0) {
+                System.out.println("无空位===");
+                int option = JOptionPane.showConfirmDialog(this, "停车场暂无空位,您是否有提前预约?");
+                if (JOptionPane.OK_OPTION == option) {
+                    new ParkCarFrame();
+//                    this.dispose();
+                }
             } else {
                 System.out.println("停车");
             }
 
         } else if (e.getSource() == (this.pickCarBtn)) {
+            new PickCarFrame();
             System.out.println("取车");
         } else if (e.getSource() == (this.appointmentBtn)) {
+            new AppointmentFrame();
             System.out.println("预约");
         } else if (e.getSource() == (this.adminLoginBtn)) {
+            new LoginFrame();
             System.out.println("管理员登录");
         } else if (e.getSource() == (this.exitBtn)) {
             System.out.println("退出系统");
             int option = JOptionPane.showConfirmDialog(this, "是否退出系统?");
             if (JOptionPane.OK_OPTION == option) {
-                this.dispose();
-                // hello
+                ParkCarFrame parkCarFrame = new ParkCarFrame();
             }
         }
     }

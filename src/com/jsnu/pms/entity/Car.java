@@ -16,7 +16,7 @@ public class Car {
     private String licensePlateNumber;
 
     // 进入时间
-    private Date entryTIme;
+    private Date entryTime;
 
     // 离开时间
     private Date leaveTime;
@@ -27,10 +27,10 @@ public class Car {
     public Car() {
     }
 
-    public Car(String id, String licensePlateNumber, Date entryTIme, Date leaveTime, Double money) {
+    public Car(String id, String licensePlateNumber, Date entryTime, Date leaveTime, Double money) {
         this.id = id;
         this.licensePlateNumber = licensePlateNumber;
-        this.entryTIme = entryTIme;
+        this.entryTime = entryTime;
         this.leaveTime = leaveTime;
         this.money = money;
     }
@@ -51,12 +51,12 @@ public class Car {
         this.licensePlateNumber = licensePlateNumber;
     }
 
-    public Date getEntryTIme() {
-        return entryTIme;
+    public Date getEntryTime() {
+        return entryTime;
     }
 
-    public void setEntryTIme(Date entryTIme) {
-        this.entryTIme = entryTIme;
+    public void setEntryTime(Date entryTime) {
+        this.entryTime = entryTime;
     }
 
     public Date getLeaveTime() {
@@ -80,7 +80,7 @@ public class Car {
         return "Car{" +
                 "编号='" + id + '\'' +
                 ", 车牌号='" + licensePlateNumber + '\'' +
-                ", 进入时间=" + entryTIme +
+                ", 进入时间=" + entryTime +
                 ", 离开时间=" + leaveTime +
                 ", 金额=" + money +
                 '}';
