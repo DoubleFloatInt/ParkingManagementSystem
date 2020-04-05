@@ -1,8 +1,10 @@
 package com.jsnu.pms.dao.impl;
 
 import com.jsnu.pms.dao.ICarDao;
+import com.jsnu.pms.data.CarNode;
 import com.jsnu.pms.entity.Car;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ import java.util.List;
  * @Date 2020/4/4 6:32 下午
  */
 public class CarDaoImpl implements ICarDao {
-    private Car head;
+    private CarNode head = null;
 
     public CarDaoImpl() {
         // 初始化链表
@@ -18,7 +20,16 @@ public class CarDaoImpl implements ICarDao {
 
     @Override
     public List<Car> getAllCars() {
-        return null;
+        if (this.head == null) {
+            return null;
+        }
+        List<Car> cars = new ArrayList<Car>();
+        CarNode node = this.head;
+        while (node != null) {
+            Car car = node.getData();
+            cars.add(car);
+        }
+        return cars;
     }
 
     @Override
