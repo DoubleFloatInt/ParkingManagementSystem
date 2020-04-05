@@ -70,7 +70,6 @@ public class ParkInfoFrame extends JFrame {
                 JButton btn = new JButton();
                 btn.setBounds(i * 115 + 30, j * 65 + 100, 100, 50);
                 Integer index = j * 25 + i;
-                System.out.println(index);
                 if (this.cars.size() > index) {
                     btn.setBackground(Color.RED);
                     btn.setText(cars.get(index).getLicensePlateNumber());

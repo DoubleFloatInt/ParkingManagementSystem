@@ -1,21 +1,44 @@
 package com.jsnu.pms.controller;
 
+import com.jsnu.pms.entity.Car;
+import com.jsnu.pms.service.ICarService;
+import com.jsnu.pms.service.impl.CarServiceImpl;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * @Author 周星晨
  * @Date 2020/4/4 20:24
  */
 public class HistroyFrame extends JFrame {
+    private ICarService carService = null;
+
+    private List<Car> history = null;
 
     private JTable table;
 
     public HistroyFrame() {
+        carService = new CarServiceImpl();
+        history = carService.getAllHistory();
+        String[] columnName = {"订单编号", "车牌号", "开始时间", "结束时间", "费用"};
+        Object[][] rowData;
+        if (history == null) {
+            rowData = new Object[0][0];
+        } else {
+            rowData = new Object[history.size()][5];
+        }
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        String[] columnName = {"卡号", "车牌号", "开始时间", "结束时间", "总时", "费用"};
-        Object[][] rowData = new Object[6][6];
+        for (int i = 0; i < history.size(); i++) {
+            rowData[i][0] = history.get(i).getId();
+            rowData[i][1] = history.get(i).getLicensePlateNumber();
+            rowData[i][2] = sd.format(history.get(i).getEntryTime());
+            rowData[i][3] = sd.format(history.get(i).getLeaveTime());
+            rowData[i][4] = history.get(i).getMoney();
+        }
 
 
         //获取窗口容器
@@ -26,9 +49,8 @@ public class HistroyFrame extends JFrame {
         container.add(new JScrollPane(table), BorderLayout.CENTER);
 
 
-        setSize(600, 600);
+        setSize(800, 600);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {

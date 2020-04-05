@@ -12,10 +12,24 @@ public interface ICarDao {
 
 
     /**
+     * 获取停车位数
+     * @return
+     */
+    public Integer getTotalCarport();
+
+    /**
      * 获取所有车辆信息
      * @return
      */
     public List<Car> getAllCars();
+
+
+    /**
+     * 根据车牌号获取车辆信息
+     * @param licensePlateNumber
+     * @return
+     */
+    public Car getCarInfo(String licensePlateNumber);
 
 
     /**
@@ -55,12 +69,37 @@ public interface ICarDao {
 
 
     /**
+     * 获取所有预约信息
+     * @return
+     */
+    public List<Car> getAllAppointment();
+
+    /**
+     * 获取预约信息
+     * @param licensePlateNumber
+     * @return
+     */
+    public Car getAppointment(String licensePlateNumber);
+
+
+    /**
      * 删除预约
      * @param licensePlateNumber
      */
     public void deleteAppointment(String licensePlateNumber);
 
 
+    /**
+     * 添加历史记录
+     * @param car
+     */
+    public void addHistory(Car car);
 
+
+    /**
+     * 获取所有历史记录
+     * @return
+     */
+    public List<Car> getAllHistory();
 
 }

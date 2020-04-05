@@ -10,10 +10,11 @@ import java.awt.event.MouseListener;
 
 /**
  * 停车界面
+ *
  * @author 李广帅
  * @Date 2020/4/3 7:04 下午
  */
-public class ParkCarFrame extends JFrame {
+public class ParkCarFrame extends JFrame implements MouseListener {
     private Boolean hasCarport;
     private ICarService carService = null;
 
@@ -55,33 +56,7 @@ public class ParkCarFrame extends JFrame {
 
         this.parkCarBtn = new JButton("停车");
         this.parkCarBtn.setBounds(80, 100, 80, 50);
-        this.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("停车");
-//                carService.parkCar();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
+        this.parkCarBtn.addMouseListener(this);
 
         this.add(parkCarLabel);
         this.add(parkCarText);
@@ -94,6 +69,38 @@ public class ParkCarFrame extends JFrame {
 
     public static void main(String[] args) {
         ParkCarFrame parkCarFrame = new ParkCarFrame();
-        System.out.println(parkCarFrame.getSize());
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getSource() == (this.parkCarBtn)) {
+            if (this.parkCarText.getText().matches("")) {
+                JOptionPane.showMessageDialog(this, "请输入车牌号！！！");
+            } else {
+                carService.parkCar(this.parkCarText.getText());
+                JOptionPane.showMessageDialog(this, this.parkCarText.getText() +"停车成功!");
+                this.dispose();
+            }
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

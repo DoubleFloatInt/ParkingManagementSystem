@@ -92,30 +92,24 @@ public class MainFrame extends JFrame implements MouseListener {
         if ((e.getSource()) == (this.parkCarBtn)) {
             ICarService carService = new CarServiceImpl();
             if (carService.getEmptyCarport() == 0) {
-                System.out.println("无空位===");
                 int option = JOptionPane.showConfirmDialog(this, "停车场暂无空位,您是否有提前预约?");
                 if (JOptionPane.OK_OPTION == option) {
                     new ParkCarFrame();
-//                    this.dispose();
                 }
             } else {
-                System.out.println("停车");
+                new ParkCarFrame();
             }
 
         } else if (e.getSource() == (this.pickCarBtn)) {
             new PickCarFrame();
-            System.out.println("取车");
         } else if (e.getSource() == (this.appointmentBtn)) {
             new AppointmentFrame();
-            System.out.println("预约");
         } else if (e.getSource() == (this.adminLoginBtn)) {
             new LoginFrame();
-            System.out.println("管理员登录");
         } else if (e.getSource() == (this.exitBtn)) {
-            System.out.println("退出系统");
             int option = JOptionPane.showConfirmDialog(this, "是否退出系统?");
             if (JOptionPane.OK_OPTION == option) {
-                ParkCarFrame parkCarFrame = new ParkCarFrame();
+                dispose();
             }
         }
     }

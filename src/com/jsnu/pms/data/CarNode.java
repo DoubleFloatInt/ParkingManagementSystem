@@ -7,32 +7,32 @@ import com.jsnu.pms.entity.Car;
  * @Date 2020/4/5 2:14 下午
  */
 public class CarNode {
-    private Car prev;
-    private Car next;
+    private CarNode prev;
+    private CarNode next;
     private Car data;
 
     public CarNode() {
     }
 
-    public CarNode(Car prev, Car next, Car data) {
+    public CarNode(CarNode prev, CarNode next, Car data) {
         this.prev = prev;
         this.next = next;
         this.data = data;
     }
 
-    public Car getPrev() {
+    public CarNode getPrev() {
         return prev;
     }
 
-    public void setPrev(Car prev) {
+    public void setPrev(CarNode prev) {
         this.prev = prev;
     }
 
-    public Car getNext() {
+    public CarNode getNext() {
         return next;
     }
 
-    public void setNext(Car next) {
+    public void setNext(CarNode next) {
         this.next = next;
     }
 
