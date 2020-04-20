@@ -39,7 +39,7 @@ public class CarServiceImpl implements ICarService {
     @Override
     public Car pickCar(String licensePlateNumber) {
         Car car = carDao.getCarInfo(licensePlateNumber);
-
+        System.out.println(car);
         if (car == null) {
             return null;
         }

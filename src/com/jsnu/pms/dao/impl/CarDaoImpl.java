@@ -52,6 +52,7 @@ public class CarDaoImpl implements ICarDao {
             if (car.getLicensePlateNumber().matches(licensePlateNumber)) {
                 return car;
             }
+            node = node.getNext();
         }
         return null;
     }

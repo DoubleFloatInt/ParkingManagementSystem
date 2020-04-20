@@ -2,6 +2,7 @@ package com.jsnu.pms.controller;
 
 import com.jsnu.pms.service.ICarService;
 import com.jsnu.pms.service.impl.CarServiceImpl;
+import com.jsnu.pms.utils.PSMUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,11 +80,14 @@ public class ParkCarFrame extends JFrame implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == (this.parkCarBtn)) {
-            if (this.parkCarText.getText().matches("")) {
+            String licensePlateNumber = this.parkCarText.getText();
+            if (licensePlateNumber.equals("")) {
                 JOptionPane.showMessageDialog(this, "请输入车牌号！！！");
+            } else if (!PSMUtils.checkLicensePlateNumber(licensePlateNumber)) {
+                JOptionPane.showMessageDialog(this, "您输入的车牌号格式有误!");
             } else {
                 carService.parkCar(this.parkCarText.getText());
-                JOptionPane.showMessageDialog(this, this.parkCarText.getText() +"停车成功!");
+                JOptionPane.showMessageDialog(this, this.parkCarText.getText() + "停车成功!");
                 this.dispose();
             }
         }

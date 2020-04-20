@@ -2,6 +2,7 @@ package com.jsnu.pms.controller;
 
 import com.jsnu.pms.service.ICarService;
 import com.jsnu.pms.service.impl.CarServiceImpl;
+import com.jsnu.pms.utils.PSMUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,8 +66,10 @@ public class AppointmentFrame extends JFrame implements MouseListener {
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == this.appointmentBtn) {
             String licensePlateNumber = this.licensePlateNumberText.getText();
-            if (licensePlateNumber.matches("")) {
+            if (licensePlateNumber.equals("")) {
                 JOptionPane.showMessageDialog(this, "请输入车牌号!");
+            } else if (!PSMUtils.checkLicensePlateNumber(licensePlateNumber)) {
+                JOptionPane.showMessageDialog(this, "您输入的车牌号格式有误!");
             } else {
                 carService.addAppointment(licensePlateNumber);
                 JOptionPane.showMessageDialog(this, "车牌号:" + licensePlateNumber + ",预约成功!");

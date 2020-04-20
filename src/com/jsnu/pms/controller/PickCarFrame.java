@@ -3,6 +3,7 @@ package com.jsnu.pms.controller;
 import com.jsnu.pms.entity.Car;
 import com.jsnu.pms.service.ICarService;
 import com.jsnu.pms.service.impl.CarServiceImpl;
+import com.jsnu.pms.utils.PSMUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,8 +68,11 @@ public class PickCarFrame extends JFrame implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource().equals(this.pickCarBtn)) {
-            if (this.licensePlateNumberText.getText().matches("")) {
+            String licensePlateNumber = this.licensePlateNumberText.getText();
+            if (licensePlateNumber.matches("")) {
                 JOptionPane.showMessageDialog(this, "请输入车牌号!");
+            } else if(!PSMUtils.checkLicensePlateNumber(licensePlateNumber)) {
+                JOptionPane.showMessageDialog(this, "车牌号格式错误!");
             } else {
                 Car car = carService.pickCar(this.licensePlateNumberText.getText());
                 if (car == null) {
