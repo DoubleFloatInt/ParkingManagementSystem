@@ -1,5 +1,7 @@
 package com.jsnu.pms.entity;
 
+import com.jsnu.pms.utils.CarType;
+
 import java.util.Date;
 
 /**
@@ -9,27 +11,55 @@ import java.util.Date;
  */
 public class Car {
 
-    // 订单编号
+    /**
+     * 订单编号
+     */
     private String id;
 
-    // 车牌号
+    /**
+     * 车牌号
+     */
     private String licensePlateNumber;
 
-    // 进入时间
+    /**
+     * 车型
+     */
+    private CarType carType;
+
+    /**
+     * 车位编号
+     */
+    private String parkPlace;
+
+    /**
+     * 汽车状态：true停车、false预约
+     */
+    private Boolean status;
+
+    /**
+     * 进入时间
+     */
     private Date entryTime;
 
-    // 离开时间
+    /**
+     * 离开时间
+     */
     private Date leaveTime;
 
-    // 收费金额
+    /**
+     * 收费金额
+     */
     private Double money;
 
     public Car() {
     }
 
-    public Car(String id, String licensePlateNumber, Date entryTime, Date leaveTime, Double money) {
+    public Car(String id, String licensePlateNumber, CarType carType, String parkPlace, Boolean status, Date entryTime, Date leaveTime, Double money) {
         this.id = id;
         this.licensePlateNumber = licensePlateNumber;
+        this.carType = carType;
+        this.parkPlace = parkPlace;
+        this.status = status;
         this.entryTime = entryTime;
         this.leaveTime = leaveTime;
         this.money = money;
@@ -49,6 +79,30 @@ public class Car {
 
     public void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
+    }
+
+    public CarType getCarType() {
+        return carType;
+    }
+
+    public void setCarType(CarType carType) {
+        this.carType = carType;
+    }
+
+    public String getParkPlace() {
+        return parkPlace;
+    }
+
+    public void setParkPlace(String parkPlace) {
+        this.parkPlace = parkPlace;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Date getEntryTime() {
@@ -78,11 +132,14 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "编号='" + id + '\'' +
-                ", 车牌号='" + licensePlateNumber + '\'' +
-                ", 进入时间=" + entryTime +
-                ", 离开时间=" + leaveTime +
-                ", 金额=" + money +
+                "id='" + id + '\'' +
+                ", licensePlateNumber='" + licensePlateNumber + '\'' +
+                ", carType=" + carType +
+                ", parkPlace='" + parkPlace + '\'' +
+                ", status=" + status +
+                ", entryTime=" + entryTime +
+                ", leaveTime=" + leaveTime +
+                ", money=" + money +
                 '}';
     }
 }

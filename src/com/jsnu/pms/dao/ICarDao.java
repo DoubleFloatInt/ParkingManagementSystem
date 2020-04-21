@@ -1,12 +1,13 @@
 package com.jsnu.pms.dao;
 
 import com.jsnu.pms.entity.Car;
+import com.jsnu.pms.utils.CarType;
 
 import java.util.List;
 
 /**
  * @author 李广帅
- * @Date 2020/4/4 6:15 下午
+ * @date 2020/4/4 6:15 下午
  */
 public interface ICarDao {
 
@@ -62,6 +63,14 @@ public interface ICarDao {
 
 
     /**
+     * 更改汽车状态:预约、非预约
+     * @param licensePlateNumber
+     * @param status
+     */
+    public void updateCarStatus(String licensePlateNumber, Boolean status);
+
+
+    /**
      * 添加预约
      * @param car
      */
@@ -101,5 +110,12 @@ public interface ICarDao {
      * @return
      */
     public List<Car> getAllHistory();
+
+
+    /**
+     * 获取停车位编号
+     * @return
+     */
+    public String getPlaceID(CarType carType);
 
 }

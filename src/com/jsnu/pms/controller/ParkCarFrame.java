@@ -2,6 +2,7 @@ package com.jsnu.pms.controller;
 
 import com.jsnu.pms.service.ICarService;
 import com.jsnu.pms.service.impl.CarServiceImpl;
+import com.jsnu.pms.utils.CarType;
 import com.jsnu.pms.utils.PSMUtils;
 
 import javax.swing.*;
@@ -22,6 +23,8 @@ public class ParkCarFrame extends JFrame implements MouseListener {
 
     private JLabel parkCarLabel;
     private JTextField parkCarText;
+    private JLabel carTypeLabel;
+    private JComboBox<String> carTypeSelect;
     private JButton parkCarBtn;
 
     public ParkCarFrame() throws HeadlessException {
@@ -54,6 +57,14 @@ public class ParkCarFrame extends JFrame implements MouseListener {
         this.parkCarText = new JTextField();
         this.parkCarText.setBounds(140, 30, 100, 30);
 
+        this.carTypeLabel = new JLabel("请选择车型:");
+        this.carTypeLabel.setBounds(30, 70, 100, 30);
+
+        this.carTypeSelect = new JComboBox<>();
+        this.carTypeSelect.addItem("大型车");
+        this.carTypeSelect.addItem("中型车");
+        this.carTypeSelect.addItem("小型车");
+        this.carTypeSelect.setBounds(140, 70, 100, 30);
 
         this.parkCarBtn = new JButton("停车");
         this.parkCarBtn.setBounds(80, 100, 80, 50);
@@ -61,6 +72,8 @@ public class ParkCarFrame extends JFrame implements MouseListener {
 
         this.add(parkCarLabel);
         this.add(parkCarText);
+        this.add(carTypeLabel);
+        this.add(carTypeSelect);
         this.add(parkCarBtn);
 
 
@@ -86,7 +99,21 @@ public class ParkCarFrame extends JFrame implements MouseListener {
             } else if (!PSMUtils.checkLicensePlateNumber(licensePlateNumber)) {
                 JOptionPane.showMessageDialog(this, "您输入的车牌号格式有误!");
             } else {
-                carService.parkCar(this.parkCarText.getText());
+                CarType carType;
+                switch (carTypeSelect.getSelectedItem().toString()) {
+                    case "大型车":
+                        carType = CarType.BIG;
+                        break;
+                    case "中型车":
+                        carType = CarType.MIDDLE;
+                        break;
+                    case "小型车":
+                        carType = CarType.SMALL;
+                        break;
+                    default:
+                        carType = CarType.SMALL;
+                }
+                carService.parkCar(this.parkCarText.getText(), carType);
                 JOptionPane.showMessageDialog(this, this.parkCarText.getText() + "停车成功!");
                 this.dispose();
             }

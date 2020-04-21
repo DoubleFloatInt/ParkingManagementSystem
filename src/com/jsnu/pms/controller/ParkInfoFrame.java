@@ -3,10 +3,12 @@ package com.jsnu.pms.controller;
 import com.jsnu.pms.entity.Car;
 import com.jsnu.pms.service.ICarService;
 import com.jsnu.pms.service.impl.CarServiceImpl;
+import com.jsnu.pms.utils.CarType;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,8 +27,53 @@ public class ParkInfoFrame extends JFrame {
     private Integer carNum;
     private Integer remainCarport;
     private List<Car> cars;
+    private HashMap<String, Car> carsA;
+    private HashMap<String, Car> carsB;
+    private HashMap<String, Car> carsC;
+
+    public void test() {
+        carService.parkCar("苏C12345", CarType.SMALL);
+        carService.parkCar("苏C22345", CarType.SMALL);
+        carService.parkCar("苏C32345", CarType.SMALL);
+        carService.parkCar("苏C42345", CarType.SMALL);
+        carService.parkCar("苏C52345", CarType.SMALL);
+
+        carService.pickCar("苏C22345");
+
+        carService.parkCar("苏C62345", CarType.SMALL);
+        carService.parkCar("苏C72345", CarType.SMALL);
+        carService.parkCar("苏C82345", CarType.SMALL);
+
+        carService.pickCar("苏C72345");
+
+        carService.parkCar("苏C92345", CarType.SMALL);
+        carService.parkCar("苏C12341", CarType.SMALL);
+        carService.parkCar("苏C12342", CarType.SMALL);
+        carService.pickCar("苏C12345");
+        carService.addAppointment("苏C12345", CarType.SMALL);
+    }
 
     public ParkInfoFrame() {
+        this.carService = new CarServiceImpl();
+//        test();
+        this.cars = carService.getAllCars();
+        this.totalCarport = carService.getTotalCarport();
+        this.carNum = carService.getCarNum();
+        this.remainCarport = this.totalCarport - this.carNum;
+        this.carsA = new HashMap<String, Car>();
+        this.carsB = new HashMap<String, Car>();
+        this.carsC = new HashMap<String, Car>();
+
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            if (car.getCarType() == CarType.BIG) {
+                this.carsA.put(car.getParkPlace(), car);
+            } else if (car.getCarType() == CarType.MIDDLE) {
+                this.carsB.put(car.getParkPlace(), car);
+            } else {
+                this.carsC.put(car.getParkPlace(), car);
+            }
+        }
         init();
     }
 
@@ -34,15 +81,9 @@ public class ParkInfoFrame extends JFrame {
      * 初始化函数
      */
     public void init() {
-        this.carService = new CarServiceImpl();
-        this.cars = carService.getAllCars();
-        this.totalCarport = carService.getTotalCarport();
-        this.carNum = carService.getCarNum();
-        this.remainCarport = this.totalCarport - this.carNum;
 
 
-
-        this.setSize(1200, 800);
+        this.setSize(1270, 945);
         this.setLocationRelativeTo(null);
         this.setTitle("停车情况");
         this.setLayout(null);
@@ -64,25 +105,81 @@ public class ParkInfoFrame extends JFrame {
         this.add(remainLabel);
 
 
-
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 10; i++) {
+                Integer index = j * 10 + i;
                 JButton btn = new JButton();
-                btn.setBounds(i * 115 + 30, j * 65 + 100, 100, 50);
-                Integer index = j * 25 + i;
-                if (this.cars.size() > index) {
-                    btn.setBackground(Color.RED);
-                    btn.setText(cars.get(index).getLicensePlateNumber());
-
+                btn.setBounds(i * 120 + 30, j * 80 + 90, 120, 80);
+                Car car = carsC.get(String.format("C%d", index));
+                if (car != null) {
+                    if (car.getStatus()) {
+                        btn.setBackground(Color.RED);
+                        btn.setOpaque(true);
+                        btn.setText("<html>" + String.format("车位:C%d", index) + "<br>" + car.getLicensePlateNumber() + "</html>");
+                    } else {
+                        btn.setText("<html>" + String.format("车位:C%d", index) + "<br>已被预约</html>");
+                        btn.setBackground(Color.RED);
+                        btn.setOpaque(true);
+                    }
                 } else {
-                    btn.setText("闲置");
+                    btn.setText("<html>" + String.format("车位:C%d", index) + "<br>闲置</html>");
                     btn.setBackground(Color.GREEN);
+                    btn.setOpaque(true);
                 }
                 this.carBtnList.add(btn);
                 this.add(btn);
             }
         }
-
+        for (int j = 0; j < 4; j++) {
+            for (int i = 0; i < 10; i++) {
+                Integer index = j * 10 + i;
+                JButton btn = new JButton();
+                btn.setBounds(i * 120 + 30, j * 80 + 410, 120, 80);
+                Car car = carsB.get(String.format("B%d", index));
+                if (car != null) {
+                    if (car.getStatus()) {
+                        btn.setBackground(Color.RED);
+                        btn.setOpaque(true);
+                        btn.setText("<html>" + String.format("车位:B%d", index) + "<br>" + car.getLicensePlateNumber() + "</html>");
+                    } else {
+                        btn.setText("<html>" + String.format("车位:B%d", index) + "<br>已被预约</html>");
+                        btn.setBackground(Color.RED);
+                        btn.setOpaque(true);
+                    }
+                } else {
+                    btn.setText("<html>" + String.format("车位:B%d", index) + "<br>闲置</html>");
+                    btn.setBackground(Color.GREEN);
+                    btn.setOpaque(true);
+                }
+                this.carBtnList.add(btn);
+                this.add(btn);
+            }
+        }
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < 10; i++) {
+                Integer index = j * 10 + i;
+                JButton btn = new JButton();
+                btn.setBounds(i * 120 + 30, j * 80 + 730, 120, 80);
+                Car car = carsA.get(String.format("A%d", index));
+                if (car != null) {
+                    if (car.getStatus()) {
+                        btn.setBackground(Color.RED);
+                        btn.setOpaque(true);
+                        btn.setText("<html>" + String.format("车位:A%d", index) + "<br>" + car.getLicensePlateNumber() + "</html>");
+                    } else {
+                        btn.setText("<html>" + String.format("车位:A%d", index) + "<br>已被预约</html>");
+                        btn.setBackground(Color.RED);
+                        btn.setOpaque(true);
+                    }
+                } else {
+                    btn.setText("<html>" + String.format("车位:A%d", index) + "<br>闲置</html>");
+                    btn.setBackground(Color.GREEN);
+                    btn.setOpaque(true);
+                }
+                this.carBtnList.add(btn);
+                this.add(btn);
+            }
+        }
 
         this.setVisible(true);
     }

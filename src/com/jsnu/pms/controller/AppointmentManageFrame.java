@@ -23,19 +23,21 @@ public class AppointmentManageFrame extends JFrame {
     public AppointmentManageFrame() {
         carService = new CarServiceImpl();
         appointment = carService.getAllAppointment();
-        String[] columnName = {"订单编号", "车牌号", "预约时间"};
+        String[] columnName = {"订单编号", "车牌号", "车型", "停车位", "预约时间"};
         Object[][] rowData;
         if (appointment == null) {
             rowData = new Object[0][0];
         } else {
-            rowData = new Object[appointment.size()][3];
+            rowData = new Object[appointment.size()][columnName.length];
         }
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         for (int i = 0; i < appointment.size(); i++) {
             rowData[i][0] = appointment.get(i).getId();
             rowData[i][1] = appointment.get(i).getLicensePlateNumber();
-            rowData[i][2] = sd.format(appointment.get(i).getEntryTime());
+            rowData[i][2] = appointment.get(i).getCarType();
+            rowData[i][3] = appointment.get(i).getParkPlace();
+            rowData[i][4] = sd.format(appointment.get(i).getEntryTime());
         }
 
 

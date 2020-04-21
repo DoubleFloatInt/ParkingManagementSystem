@@ -1,6 +1,7 @@
 package com.jsnu.pms.service;
 
 import com.jsnu.pms.entity.Car;
+import com.jsnu.pms.utils.CarType;
 
 import java.util.List;
 
@@ -13,14 +14,16 @@ public interface ICarService {
 
     /**
      * 停车
+     *
      * @param licensePlateNumber 车牌号
      * @return
      */
-    public Boolean parkCar(String licensePlateNumber);
+    public Boolean parkCar(String licensePlateNumber, CarType carType);
 
 
     /**
      * 取车
+     *
      * @param licensePlateNumber
      * @return
      */
@@ -29,19 +32,24 @@ public interface ICarService {
 
     /**
      * 预约
+     *
      * @param licensePlateNumber
+     * @param carType
+     * @return
      */
-    public void addAppointment(String licensePlateNumber);
+    public Car addAppointment(String licensePlateNumber, CarType carType);
 
 
     /**
      * 获取所有预约信息
+     *
      * @return
      */
     public List<Car> getAllAppointment();
 
     /**
      * 获取预约信息
+     *
      * @param licensePlateNumber
      * @return
      */
@@ -50,6 +58,7 @@ public interface ICarService {
 
     /**
      * 删除预约信息
+     *
      * @param licensePlateNumber
      */
     public void deleteAppointment(String licensePlateNumber);
@@ -80,6 +89,7 @@ public interface ICarService {
 
     /**
      * 获取停车场内所有汽车信息
+     *
      * @return
      */
     public List<Car> getAllCars();
@@ -87,6 +97,7 @@ public interface ICarService {
 
     /**
      * 获取所有历史记录
+     *
      * @return
      */
     public List<Car> getAllHistory();
@@ -94,10 +105,10 @@ public interface ICarService {
 
     /**
      * 添加历史记录
+     *
      * @param car
      */
     public void addHistory(Car car);
-
 
 
 }

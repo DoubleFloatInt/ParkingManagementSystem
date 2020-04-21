@@ -3,7 +3,9 @@ package com.jsnu.pms.service.impl;
 import com.jsnu.pms.dao.ICarDao;
 import com.jsnu.pms.entity.Car;
 import com.jsnu.pms.service.ICarService;
+import com.jsnu.pms.utils.CarType;
 import com.jsnu.pms.utils.Factory;
+import com.jsnu.pms.utils.PSMUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +15,7 @@ import java.util.List;
 
 /**
  * @author 李广帅
- * @Date 2020/4/4 4:54 下午
+ * @date 2020/4/4 4:54 下午
  */
 public class CarServiceImpl implements ICarService {
     private ICarDao carDao = null;
@@ -23,16 +25,21 @@ public class CarServiceImpl implements ICarService {
     }
 
     @Override
-    public Boolean parkCar(String licensePlateNumber) {
+    public Boolean parkCar(String licensePlateNumber, CarType carType) {
         Car car = getAppointment(licensePlateNumber);
         if (car == null) {
             car = new Car();
-            car.setId(String.valueOf(new Date().hashCode()));
+            car.setId(PSMUtils.getId());
+            car.setCarType(carType);
+            car.setStatus(true);
+            car.setParkPlace(carDao.getPlaceID(carType));
             car.setLicensePlateNumber(licensePlateNumber);
             car.setEntryTime(new Date());
+            carDao.addCar(car);
+        } else {
+            carDao.updateCarStatus(licensePlateNumber, true);
+            carDao.deleteAppointment(licensePlateNumber);
         }
-        carDao.addCar(car);
-        carDao.deleteAppointment(licensePlateNumber);
         return true;
     }
 
@@ -58,21 +65,59 @@ public class CarServiceImpl implements ICarService {
             e.printStackTrace();
         }
         // 获取时间间隔（小时）
-        long hour = diff % nd / nh;
-        Double money = hour * 5.5;
+        double hour = diff % nd / (double) nh;
+        double money = 0;
+        if (hour <= 0.5) {
+            // 半小时内免费
+            money = 0.0;
+        } else if (hour > 0.5 && hour <= 2) {
+            switch (car.getCarType()) {
+                case BIG:
+                    money = 10.0;
+                    break;
+                case MIDDLE:
+                    money = 7.0;
+                    break;
+                case SMALL:
+                    money = 5.0;
+                    break;
+                default:
+                    money = 0;
+            }
+        } else {
+            switch (car.getCarType()) {
+                case BIG:
+                    money += 3.0;
+                    break;
+                case MIDDLE:
+                    money += 2.0;
+                    break;
+                case SMALL:
+                    money += 1.0;
+                    break;
+                default:
+                    money = 0;
+            }
+        }
         car.setMoney(money);
         addHistory(car);
         carDao.deleteCar(licensePlateNumber);
         return car;
     }
 
+
     @Override
-    public void addAppointment(String licensePlateNumber) {
+    public Car addAppointment(String licensePlateNumber, CarType carType) {
         Car car = new Car();
-        car.setId(String.valueOf(new Date().hashCode()));
+        car.setId(PSMUtils.getId());
+        car.setStatus(false);
+        car.setParkPlace(carDao.getPlaceID(carType));
+        car.setCarType(carType);
         car.setLicensePlateNumber(licensePlateNumber);
         car.setEntryTime(new Date());
         carDao.addAppointment(car);
+        carDao.addCar(car);
+        return car;
     }
 
     @Override
