@@ -160,6 +160,11 @@ public class CarServiceImpl implements ICarService {
     }
 
     @Override
+    public Car getCarBylicensePlateNumber(String licensePlateNumber) {
+        return carDao.getCarInfo(licensePlateNumber);
+    }
+
+    @Override
     public List<Car> getAllHistory() {
         List<Car> history = carDao.getAllHistory();
         return history;

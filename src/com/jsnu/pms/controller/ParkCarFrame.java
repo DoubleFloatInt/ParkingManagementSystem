@@ -1,5 +1,6 @@
 package com.jsnu.pms.controller;
 
+import com.jsnu.pms.entity.Car;
 import com.jsnu.pms.service.ICarService;
 import com.jsnu.pms.service.impl.CarServiceImpl;
 import com.jsnu.pms.utils.CarType;
@@ -99,23 +100,28 @@ public class ParkCarFrame extends JFrame implements MouseListener {
             } else if (!PSMUtils.checkLicensePlateNumber(licensePlateNumber)) {
                 JOptionPane.showMessageDialog(this, "您输入的车牌号格式有误!");
             } else {
-                CarType carType;
-                switch (carTypeSelect.getSelectedItem().toString()) {
-                    case "大型车":
-                        carType = CarType.BIG;
-                        break;
-                    case "中型车":
-                        carType = CarType.MIDDLE;
-                        break;
-                    case "小型车":
-                        carType = CarType.SMALL;
-                        break;
-                    default:
-                        carType = CarType.SMALL;
+                Car car = carService.getCarBylicensePlateNumber(licensePlateNumber);
+                if (car == null) {
+                    CarType carType;
+                    switch (carTypeSelect.getSelectedItem().toString()) {
+                        case "大型车":
+                            carType = CarType.BIG;
+                            break;
+                        case "中型车":
+                            carType = CarType.MIDDLE;
+                            break;
+                        case "小型车":
+                            carType = CarType.SMALL;
+                            break;
+                        default:
+                            carType = CarType.SMALL;
+                    }
+                    carService.parkCar(this.parkCarText.getText(), carType);
+                    JOptionPane.showMessageDialog(this, this.parkCarText.getText() + "停车成功!");
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "请勿重复停车!");
                 }
-                carService.parkCar(this.parkCarText.getText(), carType);
-                JOptionPane.showMessageDialog(this, this.parkCarText.getText() + "停车成功!");
-                this.dispose();
             }
         }
     }

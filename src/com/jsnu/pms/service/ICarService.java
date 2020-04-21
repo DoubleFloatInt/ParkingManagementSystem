@@ -96,6 +96,14 @@ public interface ICarService {
 
 
     /**
+     * 根据车牌号查询车辆信息
+     * @param licensePlateNumber
+     * @return
+     */
+    public Car getCarBylicensePlateNumber(String licensePlateNumber);
+
+
+    /**
      * 获取所有历史记录
      *
      * @return
