@@ -2,8 +2,10 @@ package com.jsnu.pms.utils;
 
 import com.jsnu.pms.dao.IAdminDao;
 import com.jsnu.pms.dao.ICarDao;
+import com.jsnu.pms.dao.IMemberDao;
 import com.jsnu.pms.dao.impl.AdminDaoImpl;
 import com.jsnu.pms.dao.impl.CarDaoImpl;
+import com.jsnu.pms.dao.impl.MemberDaoImpl;
 import com.jsnu.pms.service.impl.AdminServiceImpl;
 
 /**
@@ -13,6 +15,7 @@ import com.jsnu.pms.service.impl.AdminServiceImpl;
 public class Factory {
     private static ICarDao carDao = null;
     private static IAdminDao adminDao = null;
+    private static IMemberDao memberDao = null;
 
     public static ICarDao getCarDao() {
         if (carDao == null) {
@@ -28,5 +31,10 @@ public class Factory {
         return adminDao;
     }
 
-
+    public static IMemberDao getMemberDao() {
+        if(memberDao == null){
+            memberDao = new MemberDaoImpl();
+        }
+        return memberDao;
+    }
 }

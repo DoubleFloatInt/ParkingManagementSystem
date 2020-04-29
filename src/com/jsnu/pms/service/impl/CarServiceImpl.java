@@ -40,6 +40,7 @@ public class CarServiceImpl implements ICarService {
             carDao.updateCarStatus(licensePlateNumber, true);
             carDao.deleteAppointment(licensePlateNumber);
         }
+
         return true;
     }
 
@@ -64,6 +65,7 @@ public class CarServiceImpl implements ICarService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         // 获取时间间隔（小时）
         double hour = diff % nd / (double) nh;
         double money = 0;
@@ -87,13 +89,13 @@ public class CarServiceImpl implements ICarService {
         } else {
             switch (car.getCarType()) {
                 case BIG:
-                    money += 3.0;
+                    money += 10 + 3.0 * (hour - 2);
                     break;
                 case MIDDLE:
-                    money += 2.0;
+                    money += 7 + 2.0 * (hour - 2);
                     break;
                 case SMALL:
-                    money += 1.0;
+                    money += 5 + 1.0 * (hour - 2);
                     break;
                 default:
                     money = 0;
@@ -104,7 +106,6 @@ public class CarServiceImpl implements ICarService {
         carDao.deleteCar(licensePlateNumber);
         return car;
     }
-
 
     @Override
     public Car addAppointment(String licensePlateNumber, CarType carType) {

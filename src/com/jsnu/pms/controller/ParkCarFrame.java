@@ -4,12 +4,15 @@ import com.jsnu.pms.entity.Car;
 import com.jsnu.pms.service.ICarService;
 import com.jsnu.pms.service.impl.CarServiceImpl;
 import com.jsnu.pms.utils.CarType;
+import com.jsnu.pms.utils.JTextFieldHintListener;
 import com.jsnu.pms.utils.PSMUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import static com.jsnu.pms.utils.FrameStyle.InitGlobalFont;
 
 /**
  * 停车界面
@@ -52,14 +55,17 @@ public class ParkCarFrame extends JFrame implements MouseListener {
         this.setLayout(null);
         this.setResizable(false);
 
-        this.parkCarLabel = new JLabel("请输入车牌号:");
+        this.parkCarLabel = new JLabel("车牌号:");
         this.parkCarLabel.setBounds(30, 30, 100, 30);
 
         this.parkCarText = new JTextField();
         this.parkCarText.setBounds(140, 30, 100, 30);
+        parkCarText.addFocusListener(new JTextFieldHintListener(parkCarText, "请输入车牌号"));
 
         this.carTypeLabel = new JLabel("请选择车型:");
         this.carTypeLabel.setBounds(30, 70, 100, 30);
+
+
 
         this.carTypeSelect = new JComboBox<>();
         this.carTypeSelect.addItem("大型车");
@@ -68,7 +74,7 @@ public class ParkCarFrame extends JFrame implements MouseListener {
         this.carTypeSelect.setBounds(140, 70, 100, 30);
 
         this.parkCarBtn = new JButton("停车");
-        this.parkCarBtn.setBounds(80, 100, 80, 50);
+        this.parkCarBtn.setBounds(100, 120, 80, 30);
         this.parkCarBtn.addMouseListener(this);
 
         this.add(parkCarLabel);
@@ -76,13 +82,17 @@ public class ParkCarFrame extends JFrame implements MouseListener {
         this.add(carTypeLabel);
         this.add(carTypeSelect);
         this.add(parkCarBtn);
+        parkCarBtn.setBorderPainted(false);
+        parkCarBtn.setBorder(BorderFactory.createRaisedBevelBorder());
 
 
+        this.getContentPane().setBackground(new java.awt.Color(188,237,230));
         this.setVisible(true);
     }
 
 
     public static void main(String[] args) {
+        InitGlobalFont(new Font("宋体", Font.PLAIN, 13));  //统一设置字体
         ParkCarFrame parkCarFrame = new ParkCarFrame();
     }
 
@@ -118,6 +128,9 @@ public class ParkCarFrame extends JFrame implements MouseListener {
                     }
                     carService.parkCar(this.parkCarText.getText(), carType);
                     JOptionPane.showMessageDialog(this, this.parkCarText.getText() + "停车成功!");
+                    this.dispose();
+                } else if (!car.getStatus()) {
+                    carService.parkCar(this.parkCarText.getText(), CarType.SMALL);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "请勿重复停车!");

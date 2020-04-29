@@ -3,6 +3,8 @@ package com.jsnu.pms.controller;
 import javax.swing.*;
 import java.awt.*;
 
+import static com.jsnu.pms.utils.FrameStyle.InitGlobalFont;
+
 /**
  * @Author 周星晨
  * @Date 2020/4/4 20:39
@@ -29,6 +31,7 @@ public class OrderFrame extends JFrame {
     }
 
     public static void main(String[] args) {
+        InitGlobalFont(new Font("黑体", Font.PLAIN, 13));  //统一设置字体
         OrderFrame orderFrame = new OrderFrame();
     }
 }

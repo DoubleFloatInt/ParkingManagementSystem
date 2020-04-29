@@ -9,6 +9,8 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import static com.jsnu.pms.utils.FrameStyle.InitGlobalFont;
+
 /**
  * @Author 周星晨
  * @Date 2020/4/4 20:24
@@ -54,7 +56,7 @@ public class HistroyFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-
+        InitGlobalFont(new Font("宋体", Font.PLAIN, 13));  //统一设置字体
         HistroyFrame historyFrame = new HistroyFrame();
     }
 }

@@ -60,7 +60,7 @@ public class CarDaoImpl implements ICarDao {
         CarNode node = this.carHead.getNext();
         while (node != null) {
             Car car = node.getData();
-            if (car.getLicensePlateNumber().matches(licensePlateNumber)) {
+            if (car.getLicensePlateNumber().equals(licensePlateNumber)) {
                 return car;
             }
             node = node.getNext();
@@ -106,7 +106,8 @@ public class CarDaoImpl implements ICarDao {
         CarNode node = this.carHead.getNext();
         while (node != null) {
             Car car = node.getData();
-            if (car.getLicensePlateNumber().matches(licensePlateNumber)) {
+            if (car.getLicensePlateNumber().equals(licensePlateNumber)) {
+                // A10
                 int index = PSMUtils.getIndexByParkPlace(car.getParkPlace());
                 if (car.getCarType() == CarType.BIG) {
                     typeACarNum[index] = 0;
@@ -137,6 +138,7 @@ public class CarDaoImpl implements ICarDao {
                 car.setStatus(status);
                 break;
             }
+            node = node.getNext();
         }
     }
 
@@ -170,7 +172,7 @@ public class CarDaoImpl implements ICarDao {
         CarNode node = this.appointmentHead.getNext();
         while (node != null) {
             Car car = node.getData();
-            if (car.getLicensePlateNumber().matches(licensePlateNumber)) {
+            if (car.getLicensePlateNumber().equals(licensePlateNumber)) {
                 return car;
             }
             node = node.getNext();
@@ -183,7 +185,7 @@ public class CarDaoImpl implements ICarDao {
         CarNode node = this.appointmentHead.getNext();
         while (node != null) {
             Car car = node.getData();
-            if (car.getLicensePlateNumber().matches(licensePlateNumber)) {
+            if (car.getLicensePlateNumber().equals(licensePlateNumber)) {
                 if (node.getNext() == null) {
                     node.getPrev().setNext(null);
                 } else {

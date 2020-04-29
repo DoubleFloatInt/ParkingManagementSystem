@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import static com.jsnu.pms.utils.FrameStyle.InitGlobalFont;
+
 /**
  * 主程序界面
  *
@@ -19,6 +21,7 @@ public class MainFrame extends JFrame implements MouseListener {
     private JButton pickCarBtn;
     private JButton appointmentBtn;
     private JButton adminLoginBtn;
+    private JButton memberCenterBtn;
     private JButton exitBtn;
 
     public MainFrame() throws HeadlessException {
@@ -31,7 +34,7 @@ public class MainFrame extends JFrame implements MouseListener {
     public void init() {
         // 初始化代码
         this.setTitle("停车场管理系统");
-        this.setSize(500, 700);
+        this.setSize(550, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setLayout(null);
@@ -53,9 +56,13 @@ public class MainFrame extends JFrame implements MouseListener {
         this.adminLoginBtn.setText("管理员登录");
         this.adminLoginBtn.setBounds(100, 400, 300, 100);
 
+        this.memberCenterBtn = new JButton();
+        this.memberCenterBtn.setText("会员中心");
+        this.memberCenterBtn.setBounds(100, 500, 300, 100);
+
         this.exitBtn = new JButton();
         this.exitBtn.setText("退出系统");
-        this.exitBtn.setBounds(100, 500, 300, 100);
+        this.exitBtn.setBounds(100, 600, 300, 100);
 
 
         // 给按钮添加监听
@@ -63,6 +70,7 @@ public class MainFrame extends JFrame implements MouseListener {
         this.pickCarBtn.addMouseListener(this);
         this.appointmentBtn.addMouseListener(this);
         this.adminLoginBtn.addMouseListener(this);
+        this.memberCenterBtn.addMouseListener(this);
         this.exitBtn.addMouseListener(this);
 
         // 将按钮添加至窗体
@@ -70,15 +78,31 @@ public class MainFrame extends JFrame implements MouseListener {
         this.add(this.pickCarBtn);
         this.add(this.appointmentBtn);
         this.add(this.adminLoginBtn);
+        this.add(this.memberCenterBtn);
         this.add(this.exitBtn);
 
+        parkCarBtn.setBorderPainted(false);
+        parkCarBtn.setBorder(BorderFactory.createRaisedBevelBorder());
+        pickCarBtn.setBorderPainted(false);
+        pickCarBtn.setBorder(BorderFactory.createRaisedBevelBorder());
+        appointmentBtn.setBorderPainted(false);
+        appointmentBtn.setBorder(BorderFactory.createRaisedBevelBorder());
+        adminLoginBtn.setBorderPainted(false);
+        adminLoginBtn.setBorder(BorderFactory.createRaisedBevelBorder());
+        memberCenterBtn.setBorderPainted(false);
+        memberCenterBtn.setBorder(BorderFactory.createRaisedBevelBorder());
+        exitBtn.setBorderPainted(false);
+        exitBtn.setBorder(BorderFactory.createRaisedBevelBorder());
 
+
+        this.getContentPane().setBackground(new java.awt.Color(188,237,230));
         this.setVisible(true);
 
     }
 
 
     public static void main(String[] args) {
+        InitGlobalFont(new Font("黑体", Font.PLAIN, 13));  //统一设置字体
         MainFrame mainFrame = new MainFrame();
     }
 
@@ -106,7 +130,9 @@ public class MainFrame extends JFrame implements MouseListener {
             new AppointmentFrame();
         } else if (e.getSource() == (this.adminLoginBtn)) {
             new LoginFrame();
-        } else if (e.getSource() == (this.exitBtn)) {
+        } else if (e.getSource() == (this.memberCenterBtn)) {
+            new MemberCenterFrame();
+        }else if (e.getSource() == (this.exitBtn)) {
             int option = JOptionPane.showConfirmDialog(this, "是否退出系统?");
             if (JOptionPane.OK_OPTION == option) {
                 dispose();
